@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Ceci est la page d'accueil ! de mon site réalisé en Symfony 5.4</h2>
+
+    {% if app.user %}
+    <h3>Bonjour {{ app.user.firstname }} et bonne journée .</h3>
+        {% else %}
+            <h3>Bonjour  et bonne journée .</h3>
+    {% endif %}
+
+{% endblock %}
+{% block title %}Home | {{ parent() }}{% endblock %}

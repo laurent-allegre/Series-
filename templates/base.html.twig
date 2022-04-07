@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Series-List{% endblock %}</title>
+    {# notre google font #}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Asul:wght@400;700&display=swap" >
+    {# le favicon #}
+    <link rel="icon" href="{{ asset('img/favicon.png') }}">
+    {% block stylesheets %}
+        {# notre css #}
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    {% endblock %}
+    {% block javascripts %}
+    {% endblock %}
+    {% block extrastyles %}{% endblock %}
+</head>
+<body>
+{# entête du site #}
+<header>
+    <div class="container">
+        <h1 class="header-logo">
+            <a href="{{ path('main_home') }}" title="Go back to homepage">
+                <img src="{{ asset('img/logo.svg') }}" alt="Bucket-List Logo">
+            </a>
+        </h1>
+        <nav class="header-nav">
+            <ul>
+                <li><a href="{{ path('main_home') }}" title="Go back to homepage">Home</a></li>
+                <li><a href="{{ path('serie_serie_list') }}" title="All series">Series</a></li>
+              {% if app.user %}
+                <li><a href="{{ path('serie_serie_create') }}" title="Create new serie">Create</a></li>
+                <li><a href="{{ path("season_create") }}" title="Create a new season">Create season</a></li>
+                <li><a href="{{ path("app_logout") }}" title="Logout">Logout ({{ app.user.firstname }})</a></li>
+              {% if is_granted("ROLE_ADMIN") %}
+                  <li><a href="{{ path("admin_dashboard") }}" title="Admin dashboard">Admin</a></li>
+              {% endif %}
+              {% else %}
+                <li><a href="{{ path("app_login") }}" title="Login">Login</a></li>
+                <li><a href="{{ path("app_register") }}" title="Create account">Register</a></li>
+              {% endif %}
+            </ul>
+
+        </nav>
+    </div>
+</header>
+
+{# read and display all flash messages #}
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="flash flash-{{ label }}">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+
+{# contenu principal de chaque page #}
+<main>
+    <div class="container">
+        {% block body %}{% endblock %}
+    </div>
+</main>
+{# pied-de-page du site #}
+<footer>
+    <div class="container">
+        © Bucket-List {{ "now"|date("Y") }}
+    </div>
+</footer>
+</body>
+</html>
